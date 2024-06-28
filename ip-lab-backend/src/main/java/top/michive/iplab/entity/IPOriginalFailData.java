@@ -75,5 +75,15 @@ public class IPOriginalFailData {
         this.updateAt = updateAt;
     }
 
+    @Override
+    public String toString() {
+        return "IPOriginalFailData{" +
+                "id=" + id +
+                ", date=" + date +
+                ", ip='" + ip + '\'' +
+                ", loginName='" + loginName + '\'' +
+                ", tty='" + tty + '\'' +
+                '}';
+    }
 }
 
