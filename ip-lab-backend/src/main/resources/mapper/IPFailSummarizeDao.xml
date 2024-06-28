@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.michive.iplab.dao.IPFailSummarizeDao">
+
+    <resultMap type="top.michive.iplab.entity.IPFailSummarize" id="IpFailSummarizeMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="ip" column="ip" jdbcType="VARCHAR"/>
+        <result property="count" column="count" jdbcType="INTEGER"/>
+        <result property="createAt" column="create_at" jdbcType="TIMESTAMP"/>
+        <result property="updateAt" column="update_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="getByIP" resultMap="IpFailSummarizeMap">
+        select id,
+               ip,
+               count,
+               create_at,
+               update_at
+        from ip_fail_summarize
+        where ip = #{ip}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="getAllByLimit" resultMap="IpFailSummarizeMap">
+        select
+        id, ip, count, create_at, update_at
+        from ip_fail_summarize
+        <where>
+            <if test="ip_fail_summarize.id != null">
+                and id = #{id}
+            </if>
+            <if test="ip_fail_summarize.ip != null and ip_fail_summarize.ip != ''">
+                and ip = #{ip}
+            </if>
+            <if test="ip_fail_summarize.count != null">
+                and count = #{count}
+            </if>
+            <if test="ip_fail_summarize.createAt != null">
+                and create_at = #{createAt}
+            </if>
+            <if test="ip_fail_summarize.updateAt != null">
+                and update_at = #{updateAt}
+            </if>
+        </where>
+        <if test="limit != null and offset != null">
+            limit #{limit} offset #{offset}
+        </if>
+
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from ip_fail_summarize
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="ip != null and ip != ''">
+                and ip = #{ip}
+            </if>
+            <if test="count != null">
+                and count = #{count}
+            </if>
+            <if test="createAt != null">
+                and create_at = #{createAt}
+            </if>
+            <if test="updateAt != null">
+                and update_at = #{updateAt}
+            </if>
+        </where>
+    </select>
+
+</mapper>
+
