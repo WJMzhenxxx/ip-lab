@@ -10,4 +10,5 @@ public interface IPFailSummarizeService {
 
     List<IPFailSummarize> getByPage(IPFailSummarize ipFailSummarize, Integer page, Integer offset);
 
+    String getNeedToBlock(Integer limit);
 }

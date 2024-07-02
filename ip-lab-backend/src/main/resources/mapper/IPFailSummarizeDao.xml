@@ -69,6 +69,10 @@
             </if>
         </where>
     </select>
+    <select id="getTopN" resultType="top.michive.iplab.entity.IPFailSummarize"
+            parameterType="java.lang.Integer">
+        select * from ip_fail_summarize order by ip_fail_summarize.count desc limit #{n}
+    </select>
 
 </mapper>
 

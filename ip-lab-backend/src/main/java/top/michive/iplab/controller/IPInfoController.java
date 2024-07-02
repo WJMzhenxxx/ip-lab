@@ -22,4 +22,9 @@ public class IPInfoController {
     public ResponseEntity<List<IPFailSummarize>> getByPage(IPFailSummarize ipFailSummarize, @RequestParam(defaultValue = "1") Integer page, Integer offset) {
         return ResponseEntity.ok(this.ipFailSummarizeService.getByPage(ipFailSummarize, page, offset));
     }
+
+    @GetMapping("/blacklist")
+    public ResponseEntity<String> getNeedToBlock(@RequestParam(defaultValue = "10") Integer limit) {
+        return ResponseEntity.ok(this.ipFailSummarizeService.getNeedToBlock(limit));
+    }
 }

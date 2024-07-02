@@ -16,5 +16,6 @@ public interface IPFailSummarizeDao {
 
     long count(IPFailSummarize ipFailSummarize);
 
+    List<IPFailSummarize> getTopN(@Param("n") Integer n);
 }
 

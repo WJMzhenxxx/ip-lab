@@ -23,4 +23,12 @@ public class IPFailSummarizeServiceImpl implements IPFailSummarizeService {
 
         return (this.ipFailSummarizeDao.getAllByLimit(ipFailSummarize, limit == null ? null : (page - 1) * limit, limit));
     }
+
+    @Override
+    public String getNeedToBlock(Integer limit) {
+        var ips = ipFailSummarizeDao.getTopN(limit);
+        var rez = new StringBuilder();
+        ips.forEach(e -> rez.append("sshd:").append(e.getIp()).append(":deny").append("\n"));
+        return rez.toString();
+    }
 }
