@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.michive.iplab.dao.IPOriginalFailDataDao">
+
+    <resultMap type="top.michive.iplab.entity.IPOriginalFailData" id="IpOriginalFailDataMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="date" column="date" jdbcType="TIMESTAMP"/>
+        <result property="ip" column="ip" jdbcType="VARCHAR"/>
+        <result property="loginName" column="login_name" jdbcType="VARCHAR"/>
+        <result property="tty" column="tty" jdbcType="VARCHAR"/>
+        <result property="createAt" column="create_at" jdbcType="TIMESTAMP"/>
+        <result property="updateAt" column="update_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="getById" resultMap="IpOriginalFailDataMap">
+        select id,
+               date,
+               ip,
+               login_name,
+               tty,
+               create_at,
+               update_at
+        from ip_original_fail_data
+        where id = #{id}
+    </select>
+
+    <select id="getAllByLimit" resultMap="IpOriginalFailDataMap">
+        select
+        id, date, ip, login_name, tty, create_at, update_at
+        from ip_original_fail_data
+        <where>
+            <if test="ip_original_fail_data.id != null">
+                and id = #{id}
+            </if>
+            <if test="ip_original_fail_data.date != null">
+                and date = #{date}
+            </if>
+            <if test="ip_original_fail_data.ip != null and ip_original_fail_data.ip != ''">
+                and ip = #{ip}
+            </if>
+            <if test="ip_original_fail_data.loginName != null and ip_original_fail_data.loginName != ''">
+                and login_name = #{loginName}
+            </if>
+            <if test="ip_original_fail_data.tty != null and ip_original_fail_data.tty != ''">
+                and tty = #{tty}
+            </if>
+            <if test="ip_original_fail_data.createAt != null">
+                and create_at = #{createAt}
+            </if>
+            <if test="ip_original_fail_data.updateAt != null">
+                and update_at = #{updateAt}
+            </if>
+        </where>
+        limit #{limit} offset #{offset}
+    </select>
+
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from ip_original_fail_data
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="date != null">
+                and date = #{date}
+            </if>
+            <if test="ip != null and ip != ''">
+                and ip = #{ip}
+            </if>
+            <if test="loginName != null and loginName != ''">
+                and login_name = #{loginName}
+            </if>
+            <if test="tty != null and tty != ''">
+                and tty = #{tty}
+            </if>
+            <if test="createAt != null">
+                and create_at = #{createAt}
+            </if>
+            <if test="updateAt != null">
+                and update_at = #{updateAt}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into ip_original_fail_data(date, ip, login_name, tty)
+        values (#{date}, #{ip}::inet, #{loginName}, #{tty})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into ip_original_fail_data(date, ip, login_name, tty)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.date}, #{entity.ip}::inet, #{entity.loginName}, #{entity.tty})
+        </foreach>
+    </insert>
+
+</mapper>
+
