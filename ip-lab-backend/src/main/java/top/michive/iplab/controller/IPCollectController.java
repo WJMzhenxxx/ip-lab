@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import top.michive.iplab.entity.IPOriginalFailData;
 import top.michive.iplab.service.IPOriginalFailDataService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/collect")
 public class IPCollectController {
@@ -29,8 +31,7 @@ public class IPCollectController {
     }
 
     @PostMapping("/unformatted")
-    public ResponseEntity<IPOriginalFailData> unformattedAdd(@RequestBody String ipOriginalFailData) {
-
-        return ResponseEntity.ok(this.ipOriginalFailDataService.unformattedAdd(ipOriginalFailData));
+    public ResponseEntity<List<IPOriginalFailData>> unformattedAdd(@RequestBody String ipOriginalFailData) {
+        return ResponseEntity.ok(this.ipOriginalFailDataService.formatAndAdd(ipOriginalFailData));
     }
 }

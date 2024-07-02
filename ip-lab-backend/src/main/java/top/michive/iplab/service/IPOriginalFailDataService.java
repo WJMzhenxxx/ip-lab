@@ -12,5 +12,5 @@ public interface IPOriginalFailDataService {
 
     IPOriginalFailData insert(IPOriginalFailData ipOriginalFailData);
 
-    IPOriginalFailData unformattedAdd(String ipOriginalFailData);
+    List<IPOriginalFailData> formatAndAdd(String ipOriginalFailData);
 }

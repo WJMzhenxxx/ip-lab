@@ -18,10 +18,9 @@
                create_at,
                update_at
         from ip_fail_summarize
-        where ip = #{ip}
+        where ip = #{ip}::inet
     </select>
 
-    <!--查询指定行数据-->
     <select id="getAllByLimit" resultMap="IpFailSummarizeMap">
         select
         id, ip, count, create_at, update_at
@@ -31,7 +30,7 @@
                 and id = #{id}
             </if>
             <if test="ip_fail_summarize.ip != null and ip_fail_summarize.ip != ''">
-                and ip = #{ip}
+                and ip = #{ip}::inet
             </if>
             <if test="ip_fail_summarize.count != null">
                 and count = #{count}
@@ -49,7 +48,6 @@
 
     </select>
 
-    <!--统计总行数-->
     <select id="count" resultType="java.lang.Long">
         select count(1)
         from ip_fail_summarize
@@ -58,7 +56,7 @@
                 and id = #{id}
             </if>
             <if test="ip != null and ip != ''">
-                and ip = #{ip}
+                and ip = #{ip}::inet
             </if>
             <if test="count != null">
                 and count = #{count}
