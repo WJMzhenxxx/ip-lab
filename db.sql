@@ -47,19 +47,14 @@ as
 $$
 DECLARE
     nip inet;
-    lock_id bigint;
 begin
     nip := NEW.ip;
---     lock table ip_fail_summarize;
-    lock_id = (nip - '0.0.0.0'::inet)::bigint;
-    perform (select pg_advisory_xact_lock(lock_id));
+
     insert into ip_fail_summarize(ip)
     values (nip)
-    on conflict (ip) do update set count=(select count from ip_fail_summarize where ip = nip) + 1,
+    on conflict (ip) do update set count=ip_fail_summarize.count + 1,
                                    update_at=now();
-    perform (select pg_advisory_unlock(lock_id));
     return null;
-
 end;
 
 $$;
