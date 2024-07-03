@@ -55,7 +55,7 @@ begin
     perform (select pg_advisory_xact_lock(lock_id));
     insert into ip_fail_summarize(ip)
     values (nip)
-    on conflict (ip) do update set count=(select count from ip_fail_summarize where ip = nip for update) + 1,
+    on conflict (ip) do update set count=(select count from ip_fail_summarize where ip = nip) + 1,
                                    update_at=now();
     perform (select pg_advisory_unlock(lock_id));
     return null;
